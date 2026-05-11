@@ -66,6 +66,10 @@ class NativeTor @JvmOverloads @Throws(TorCtlException::class) constructor(workin
             loop@ for (retryCount in 1..TRIES_PER_STARTUP) {
                 myTorController = context.installAndStartTorOp(bridgeConfig, eventHandler)
                 myTorController.enableNetwork()
+
+                // TODO: allow setting via configuration
+                myTorController.setConf("HiddenServiceEnableIntroDoSDefense", "1")
+
                 // We will check every second to see if boot strapping has
                 // finally finished
                 for (secondsWaited in 1..TOTAL_SEC_PER_STARTUP) {
